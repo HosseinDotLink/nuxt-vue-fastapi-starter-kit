@@ -34,10 +34,10 @@
             <v-list-item-title class="text-left">Tomorrow</v-list-item-title>
 
             <v-list-item-icon>
-              <v-img 
-              :src="weather.tomorrow.icon" 
-              alt="image"
-              width="100"
+              <v-img
+                :src="weather.tomorrow.icon"
+                alt="image"
+                width="100"
               ></v-img>
             </v-list-item-icon>
 
@@ -49,9 +49,7 @@
 
         <v-list class="transparent">
           <v-list-item>
-            <v-list-item-title class="text-left"
-              >Next day</v-list-item-title
-            >
+            <v-list-item-title class="text-left">Next day</v-list-item-title>
 
             <v-list-item-icon>
               <v-img
@@ -106,6 +104,11 @@ export default {
     if (data.msg) {
       this.message = data.msg;
     } else {
+      const name = this.name;
+      this.$cookiz.set("weather-data", {
+        name: name,
+        city: data.location.split(" - ")[data.location.split(" - ").length - 1],
+      });
       this.weather = data;
     }
   },

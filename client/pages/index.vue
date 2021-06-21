@@ -12,6 +12,10 @@
     <v-text-field v-model="city" label="City"></v-text-field>
 
     <v-btn class="mr-4" @click.prevent="submit"> submit </v-btn>
+    <br>
+    <h3>Note:</h3>
+    <p>Your information is stored in the cookies and will be redirected to weather page, until you click the sign out button!</p>
+    <p>If you have already logged in, just enter your name.</p>
   </form>
 </template>
 
@@ -37,12 +41,12 @@ export default {
       return errors;
     },
   },
-  // mounted() {
-  //   const cookieData = this.$cookiz.get("weather-data");
-  //   if (cookieData) {
-  //     this.$router.push("/weather?name" + cookieData.name);
-  //   }
-  // },
+  mounted() {
+    const cookieData = this.$cookiz.get("weather-data");
+    if (cookieData) {
+      this.$router.push("/weather?name=" + cookieData.name);
+    }
+  },
   methods: {
     submit() {
       let query = "";

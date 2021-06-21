@@ -2,6 +2,10 @@
   <v-app>
     <v-app-bar :clipped-left="clipped" fixed app>
       <v-toolbar-title v-text="title" />
+      <v-spacer />
+      <v-btn icon @click.prevent="logout">
+        <v-text style="color: red; font-size: 24px">⏼</v-text>
+      </v-btn>
     </v-app-bar>
     <v-main>
       <v-container>
@@ -22,6 +26,12 @@ export default {
       fixed: false,
       title: "Weather app that save your name and location",
     };
+  },
+  methods: {
+    logout() {
+      this.$cookiz.removeAll();
+      this.$router.push("/");
+    },
   },
 };
 </script>
