@@ -10,7 +10,7 @@
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-
+        <!-- Today weather data -->
         <v-card-text>
           <v-row align="center">
             <v-col class="text-h3" cols="6"
@@ -25,7 +25,7 @@
             </v-col>
           </v-row>
         </v-card-text>
-
+        <!-- Future weather -->
         <v-list class="transparent">
           <v-list-item>
             <v-list-item-title class="text-left">Tomorrow</v-list-item-title>
@@ -90,6 +90,7 @@ export default {
       query += "&city=" + this.$route.query.city;
     }
     this.weather = await fetch(
+      // get data from fastAPI service
       "http://127.0.0.1:8000/api/weather?" + query
     ).then((res) => res.json());
   },

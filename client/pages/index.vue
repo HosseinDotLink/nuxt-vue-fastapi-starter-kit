@@ -53,6 +53,7 @@ export default {
         query += "&city=" + this.city;
       }
       if (query != "" && this.name) {
+        // pass user to weather page
         this.$router.push("/weather?" + query);
       } else {
         this.$v.$touch();
