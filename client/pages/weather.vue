@@ -8,6 +8,9 @@
             <v-list-item-title class="text-h5">
               {{ weather.location }}
             </v-list-item-title>
+            <v-list-item-title class="text-h5">
+              {{ message }}
+            </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <!-- Today weather data -->
@@ -31,7 +34,11 @@
             <v-list-item-title class="text-left">Tomorrow</v-list-item-title>
 
             <v-list-item-icon>
-              <v-img :src="weather.tomorrow.icon" alt="Sunny image"></v-img>
+              <v-img 
+              :src="weather.tomorrow.icon" 
+              alt="image"
+              width="100"
+              ></v-img>
             </v-list-item-icon>
 
             <v-list-item-subtitle class="text-right">
@@ -43,17 +50,18 @@
         <v-list class="transparent">
           <v-list-item>
             <v-list-item-title class="text-left"
-              >The day after tomorrow</v-list-item-title
+              >Next day</v-list-item-title
             >
 
             <v-list-item-icon>
               <v-img
                 :src="weather['the day after tomorrow'].icon"
-                alt="Sunny image"
+                alt="image"
+                width="100"
               ></v-img>
             </v-list-item-icon>
 
-            <v-list-item-subtitle class="text-right">
+            <v-list-item-subtitle clas class="text-right">
               {{ weather["the day after tomorrow"].temp }}
             </v-list-item-subtitle>
           </v-list-item>
@@ -69,14 +77,14 @@ export default {
   data: () => ({
     name: "",
     city: "",
+    message: "",
     weather: {
       location: "",
-      today: {},
-      tomorrow: {},
-      "the day after tomorrow": {},
+      today: { temp: 0, icon: "loading.gif" },
+      tomorrow: { temp: 0, icon: "loading.gif" },
+      "the day after tomorrow": { temp: 0, icon: "loading.gif" },
     },
   }),
-
   mounted() {
     this.name = this.$route.query.name;
     this.city = this.$route.query.city;
@@ -89,11 +97,17 @@ export default {
     if (this.$route.query.city) {
       query += "&city=" + this.$route.query.city;
     }
-    this.weather = await fetch(
+    const data = await fetch(
       // get data from fastAPI service
       "http://127.0.0.1:8000/api/weather?" + query
-    ).then((res) => res.json());
+    ).then((res) => {
+      return res.json();
+    });
+    if (data.msg) {
+      this.message = data.msg;
+    } else {
+      this.weather = data;
+    }
   },
 };
 </script>
-
